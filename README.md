@@ -6,21 +6,21 @@ This game made with Minecraft design and Game Boy inspiration. It focus in simpl
 
 Estructure Model -
 
-├── app
-│   ├── controllers
-│   │   └── classes
-│   │       ├── Entitie.js
-│   │       ├── Game.js
-│   │       ├── Object.js
-│   │       └── View.js
-│   ├── models
-│   │   └── db.js
-│   └── views
-│       ├── static
-│       │   ├── css
-│       │   └── sprites
-│       └── templates
-│           ├── config.html
-│           └── index.html
-├── README.md
-└── run.js
+├── app<br/>
+│   ├── controllers<br/>
+│   │   └── classes<br/>
+│   │       ├── Entitie.js<br/>
+│   │       ├── Game.js<br/>
+│   │       ├── Object.js<br/>
+│   │       └── View.js<br/>
+│   ├── models<br/>
+│   │   └── db.js<br/>
+│   └── views<br/>
+│       ├── static<br/>
+│       │   ├── css<br/>
+│       │   └── sprites<br/>
+│       └── templates<br/>
+│           ├── config.html<br/>
+│           └── index.html<br/>
+├── README.md<br/>
+└── run.js<br/>
