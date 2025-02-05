@@ -7,20 +7,34 @@ This game made with Minecraft design and Game Boy inspiration. It focus in simpl
 Estructure Model -
 
 ├── app<br/>
-│   ├── controllers<br/>
-│   │   └── classes<br/>
-│   │       ├── Entitie.js<br/>
-│   │       ├── Game.js<br/>
-│   │       ├── Object.js<br/>
-│   │       └── View.js<br/>
-│   ├── models<br/>
-│   │   └── db.js<br/>
-│   └── views<br/>
-│       ├── static<br/>
-│       │   ├── css<br/>
-│       │   └── sprites<br/>
-│       └── templates<br/>
-│           ├── config.html<br/>
-│           └── index.html<br/>
+│   ├── controllers<br/>
+│   │   ├── Entitie.js<br/>
+│   │   ├── Game.js<br/>
+│   │   ├── Object.js<br/>
+│   │   └── utils<br/>
+│   │       └── utils.js<br/>
+│   ├── models<br/>
+│   │   └── db.js<br/>
+│   └── views<br/>
+│       ├── static<br/>
+│       │   ├── css<br/>
+│       │   │   └── global.css<br/>
+│       │   ├── img<br/>
+│       │   │   ├── favicon.png<br/>
+│       │   │   └── sprites<br/>
+│       │   └── script<br/>
+│       │       ├── Client.js<br/>
+│       │       ├── Models.js<br/>
+│       │       └── View.js<br/>
+│       └── templates<br/>
+│           ├── config.html<br/>
+│           └── index.html<br/>
+├── package.json<br/>
+├── package-lock.json<br/>
 ├── README.md<br/>
+├── reference.png<br/>
 └── run.js<br/>
+
+### Anexos
+
+[pin expiração](https://pin.it/6YQn1rQrx)
