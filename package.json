@@ -1,9 +1,32 @@
 {
   "dependencies": {
+    "@prisma/client": "^6.3.1",
     "body-parser": "^1.20.3",
+    "cookie-parser": "^1.4.7",
     "express": "^4.21.2",
     "morgan": "^1.10.0",
     "serve-favicon": "^2.5.0",
     "socket.io": "^4.8.1"
-  }
+  },
+  "devDependencies": {
+    "prisma": "^6.3.1"
+  },
+  "name": "creative",
+  "version": "1.0.0",
+  "description": "GAME - Creative",
+  "main": "run.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gitviini/creative.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gitviini/creative/issues"
+  },
+  "homepage": "https://github.com/gitviini/creative#readme"
 }

@@ -1,0 +1,26 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+body{
+    --background: #fefefe;
+    --foreground: black;
+    --border: #444;
+    --action: #F6B17A;
+    --spin: #E9DE92;
+    --finish: #B1C78C;
+    --link: #483d8b;
+    --danger: #BE3144;
+    &.dark{
+        --background: #2c2c2c;
+        --foreground: white;
+    }
+}
+
+a{
+    color: var(--link);
+    text-decoration: none;
+}
