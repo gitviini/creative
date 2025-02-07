@@ -50,15 +50,6 @@ main {
         align-items: center;
         gap: 1rem;
 
-        input,
-        button {
-            width: 100%;
-            padding: 1rem;
-            border-radius: 3rem;
-            border: 1px solid var(--border);
-            outline: none;
-        }
-
         .container_options {
             width: 100%;
             display: flex;

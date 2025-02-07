@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: "Space Mono", monospace;
 }
 
 body{
@@ -23,4 +25,13 @@ body{
 a{
     color: var(--link);
     text-decoration: none;
+}
+
+input,
+button {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 3rem;
+    border: 1px solid var(--border);
+    outline: none;
 }
