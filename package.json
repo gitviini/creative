@@ -17,7 +17,7 @@
   "main": "run.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node run"
   },
   "repository": {
     "type": "git",
