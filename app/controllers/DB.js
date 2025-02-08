@@ -21,7 +21,7 @@ async function InsertUser(user = { name: String, email: String, entitie: String,
         }
 
         if (!exists) {
-            const newUser = await prisma.user.create({ data: user , select: {name:true, validateCode:true}})
+            const newUser = await prisma.user.create({ data: user, select: { name: true, validateCode: true } })
             res.content = newUser
         }
         else {
@@ -37,11 +37,11 @@ async function InsertUser(user = { name: String, email: String, entitie: String,
 }
 
 async function validateAccount(user = { name: String, validateCode: String }) {
-    const errors = {content: Object, message: ""}
-    const res = {content: Object, message:""}
-    try{
+    const errors = { content: Object, message: "" }
+    const res = { content: Object, message: "" }
+    try {
 
-        const fetchuser = await prisma.user.findUnique({ where: {name:user.name}, select: { validateCode:true } })
+        const fetchuser = await prisma.user.findUnique({ where: { name: user.name }, select: { validateCode: true } })
 
         console.log(fetchuser.validateCode == user.validateCode)
         if (fetchuser.validateCode == user.validateCode) {
@@ -49,17 +49,17 @@ async function validateAccount(user = { name: String, validateCode: String }) {
             console.log(updateUser)
             res.message = "Usuário autenticado."
         }
-        else{
+        else {
             res.message = "Código incorreto."
         }
     }
-    catch(err){
+    catch (err) {
         errors.content = err
         errors.message = "Falha ao conectar com o banco."
-        colorMessage("danger","validateAccount:. "+err)
+        colorMessage("danger", "validateAccount:. " + err)
     }
 
-    return {res, errors}
+    return { res, errors }
 }
 
 async function FetchListNames() {
@@ -78,13 +78,26 @@ async function FetchListNames() {
     return { res, errors }
 }
 
-async function FetchUser(user = { name: String }) {
+async function FetchUser(user = { name: String, email: String }) {
     const errors = { content: Object, message: "" }
-    const res = { content: Object }
+    const res = { content: Object, message: ""}
 
     try {
-        const user = await prisma.user.findUnique({ where: { name: user.name } })
-        res.content = user
+        const data = await FetchListNames()
+        const list = data.res.content
+        let exists = false
+        for (let n = 0; n < list.length; n++) {
+            if (user.email == list[n]?.email || user.name == list[n]?.name) {
+                exists = true
+            }
+        }
+        if (exists) {
+            res.content = await prisma.user.findUnique({ where: { name: user.name }, select: { name: true, email: true, validateAccount: true } })
+            res.message = (res.content?.validateAccount == false ? "Usuário não validado." : "")
+        }
+        else {
+            errors.message = "Usuário não cadastrado."
+        }
     }
     catch (err) {
         errors.content = err

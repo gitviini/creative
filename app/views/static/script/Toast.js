@@ -11,7 +11,7 @@ const TOAST_CONFIG = {
     onClick: function () { } // Callback after click
 }
 
-function toastMessage(mode=("success" || "warning"),text=""){
+function toastMessage(mode="warning",text=""){
     try {
         TOAST_CONFIG.text = text
         TOAST_CONFIG.style.background = `var(--${mode})`

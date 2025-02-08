@@ -17,18 +17,18 @@ form.onsubmit = (event) => {
             },
             body: JSON.stringify({ name: name, email: email })
         })
-            .then((res) => {
-                if (res.json) {
-                    const json = res.json()
-                    toastMessage(json?.message)
-                    if(res.status == 200){
-                        setTimeout(() => {
-                            window.location.reload()
-                        }, 1000);
-                    }
+            .then(async (res) => {
+                const json = await res.json().catch(()=>{})
+                if (json){
+                    toastMessage(json?.mode, json?.message)
+                    res.ok ? setTimeout(()=>window.location.href = "/validate/"+name, 1000) : {}
+                }
+                else if (res.ok) {
+                    setTimeout(() => {
+                        window.location.href = "/game"
+                    }, 1000);
                 }
             })
-        return
     }
     else if (mode == "signup") {
         fetch(path, {
@@ -39,17 +39,19 @@ form.onsubmit = (event) => {
             body: JSON.stringify({ name: name, email: email })
         })
             .then(async (res) => {
-                if (res.json) {
-                    const json = await res.json()
-                    toastMessage("success", json?.message)
-                    if(res.status == 200){
-                        setTimeout(() => {
-                            window.location.reload()
-                        }, 1000);
+                try{
+                    if (res.json) {
+                        const json = await res.json()
+                        toastMessage(json?.mode, json?.message)
+                        if (res.status == 200) {
+                            setTimeout(() => {
+                                window.location.href = "/validate/" + name
+                            }, 1000);
+                        }
                     }
                 }
+                catch(err){}
             })
-        return
     }
     else if (mode == "validateCode") {
         const code = form.children[0].value
@@ -61,19 +63,19 @@ form.onsubmit = (event) => {
             headers: {
                 "Content-type": "application/json"
             },
-            body: JSON.stringify({name: nameCookie, validateCode: code })
+            body: JSON.stringify({ name: nameCookie, validateCode: code })
         })
-        .then(async (res) => {
-            if(res.json){
-                const json = await res.json()
-                toastMessage("success",json?.message)
-                if(res.status == 200){
-                    setTimeout(() => {
-                        window.location.reload()
-                    }, 1000);
+            .then(async (res) => {
+                if (res.json) {
+                    const json = await res.json()
+                    toastMessage(json?.mode, json?.message)
+                    if (res.status == 200) {
+                        setTimeout(() => {
+                            window.location.href = "/login"
+                        }, 1000);
+                    }
                 }
-            }
-        })
+            })
     }
 }
 
