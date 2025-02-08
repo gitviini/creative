@@ -1,4 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap'); */
+
+@font-face {
+    font-family: "Space Mono";
+    src: url("../fonts/SpaceMono-Bold.ttf");
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: "Space Mono";
+    src: url("../fonts/SpaceMono-Regular.ttf");
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Space Mono";
+    src: url("../fonts/SpaceMono-BoldItalic.ttf");
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Space Mono";
+    src: url("../fonts/SpaceMono-Italic.ttf");
+    font-weight: normal;
+    font-style: italic;
+}
 
 *{
     padding: 0;
@@ -9,17 +35,20 @@
 
 body{
     --background: #fefefe;
-    --foreground: black;
+    --foreground: #123;
     --border: #444;
     --action: #F6B17A;
-    --spin: #E9DE92;
-    --finish: #B1C78C;
+    --hover: #e99c5e;
+    --warning: #E9DE92;
+    --success: #B1C78C;
     --link: #483d8b;
     --danger: #BE3144;
     &.dark{
         --background: #2c2c2c;
         --foreground: white;
     }
+
+    color: var(--foreground);
 }
 
 a{

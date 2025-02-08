@@ -5,9 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Creative</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="/css/signup.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js" defer></script>
+    <script src="/script/Toast.js" defer></script>
     <script src="https://kit.fontawesome.com/5684532330.js" crossorigin="anonymous"></script>
     <script src="/script/signup/Signup.js" defer></script>
-    <link rel="stylesheet" href="/css/signup.css">
 </head>
 
 <body>
@@ -18,8 +21,8 @@
                 <h2 class="title">Cadastrar</h2>
             </div>
             <form action="" method="post" name="signup">
-                <input type="text" name="name" placeholder="Nome">
-                <input type="text" name="email" placeholder="Email">
+                <input type="text" name="name" placeholder="Nome" required>
+                <input type="email" name="email" placeholder="Email" required>
                 <div class="container_options">
                     <button>Enviar</button>
                     <a href="/login">Já é cadastrado? Entrar.</a>
@@ -31,7 +34,7 @@
         <nav>
             <ul>
                 <li class="creator">
-                    &copy; v.ii.n.i
+                    &copy;v.ii.n.i
                 </li>
                 <li class="link">
                     <a href="https://github.com/gitviini/" target="_blank">git</a>

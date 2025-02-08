@@ -1,4 +1,4 @@
-function colorMessage(mode = "danger" | "warning" | "success", text = "") {
+function colorMessage(mode = "danger" || "warning" || "success", text = "") {
     switch (mode) {
         case "danger":
             text = `\x1b[1;31m${text}\x1b[m`

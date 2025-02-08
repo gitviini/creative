@@ -62,6 +62,11 @@ main {
                 width: auto;
                 background: var(--action);
                 cursor: pointer;
+                transition: 0.2s;
+
+                &:hover{
+                    background: var(--hover);
+                }
             }
 
             a{
