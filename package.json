@@ -12,6 +12,7 @@
     "socket.io": "^4.8.1"
   },
   "devDependencies": {
+    "nodemon": "^3.1.9",
     "prisma": "^6.3.1"
   },
   "name": "creative",
@@ -20,7 +21,8 @@
   "main": "run.js",
   "type": "module",
   "scripts": {
-    "test": "node run"
+    "start": "node run",
+    "dev": "nodemon run"
   },
   "repository": {
     "type": "git",

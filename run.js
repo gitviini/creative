@@ -19,7 +19,7 @@ const server = http.createServer(app)
 const io = new Server(server)
 const PORT = 3000
 const urls = {
-    logged: ["/game", "/config", "/logout"],
+    logged: ["/", "/config", "/logout"],
 }
 const secretKey = "#pP#*ndZ9gqEF2S"
 
@@ -31,7 +31,7 @@ app.use(bodyParser.json())
 app.use(express.static(getPath("/views/static/")))
 app.use((req, res, next) => {
     if(req.cookies["preferences"] && !urls.logged.includes(req.url)){
-        res.redirect("/game")
+        res.redirect("/")
     }
     else if(!req.cookies["preferences"] && urls.logged.includes(req.url)){
         res.redirect("/login")
@@ -140,7 +140,7 @@ app.route("/logout")
     })
 
 //GAME
-app.route("/game")
+app.route("/")
     .get((req, res) => {
         res.sendFile(getPath("/views/templates/game.html"))
     })
