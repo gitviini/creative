@@ -1,7 +1,9 @@
 import nodemailer from "nodemailer"
 import { colorMessage } from "../../utils.js"
 
-console.log(process.env.EMAIL_ADDRESS)
+if(!process.env.EMAIL_ADDRESS){
+    colorMessage("danger","Email.js:. envirioment's variables don't configureds")
+}
 
 const transporter = nodemailer.createTransport({
     service:"gmail",

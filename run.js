@@ -8,6 +8,7 @@ import { colorMessage } from "./utils.js"
 import { sendMail } from "./app/controllers/Email.js"
 
 // IMPORTs MIDDLEWAREs
+import nunjucks from "nunjucks"
 import helmet from "helmet"
 import favicon from "serve-favicon"
 import bodyParser from "body-parser"
@@ -25,6 +26,12 @@ const secretKey = "#pP#*ndZ9gqEF2S"
 
 //middlewares
 app.use(helmet({contentSecurityPolicy: false}))
+nunjucks.configure(getPath("/views/templates/"), {
+    autoescape: true,
+    express: app,
+    watch: true
+})
+app.set("view engine","njk")
 app.use(cookieParser(secretKey))
 app.use(favicon(getPath("/views/static/img/favicon.png")))
 app.use(bodyParser.json())
@@ -47,7 +54,7 @@ app.use((req, res, next) => {
 app.route("/login")
     //get page
     .get((req, res) => {
-        res.sendFile(getPath("/views/templates/login.html"))
+        res.render("login.html")
     })
     //insert new user
     .post((req, res, next) => {
@@ -74,7 +81,7 @@ app.route("/login")
 app.route("/signup")
     //get page
     .get((req, res) => {
-        res.sendFile(getPath("/views/templates/signup.html"))
+        res.render("signup.html")
     })
     //insert new user
     .post((req, res) => {
@@ -108,7 +115,7 @@ app.route("/signup")
 //VALIDATE WITH CODE
 app.route("/validate/:name")
     .get((req, res)=>{
-        res.sendFile(getPath("/views/templates/validateCode.html"))
+        res.render("validateCode.html")
     })
     //account validate with code
     .post((req,res)=>{
@@ -142,7 +149,7 @@ app.route("/logout")
 //GAME
 app.route("/")
     .get((req, res) => {
-        res.sendFile(getPath("/views/templates/game.html"))
+        res.render("game.html")
     })
 
 //SOCKET MANAGER
