@@ -58,17 +58,6 @@ main {
             align-items: center;
             gap: 1rem;
 
-            button {
-                width: auto;
-                background: var(--action);
-                cursor: pointer;
-                transition: 0.2s;
-
-                &:hover{
-                    background: var(--hover);
-                }
-            }
-
             a{
                 text-align: right;
             }

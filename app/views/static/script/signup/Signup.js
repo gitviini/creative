@@ -95,16 +95,3 @@ async function codeResend(){
         }
     })
 }
-
-function getCookie(nameCookie = "") {
-    const cookies = document.cookie.split("; ")
-    let res = ""
-    cookies.forEach(cookie => {
-        const tmp = cookie.split("=")
-        if (tmp[0] == nameCookie) {
-            res = tmp[1]
-        }
-    })
-    console.log(res)
-    return res
-}

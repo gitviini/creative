@@ -30,7 +30,7 @@ async function InsertUser(user = { name: String, email: String, entitie: String,
     }
     catch (err) {
         errors.content = err
-        errors.message = "Falha ao criar novo usuário."
+        errors.message = "Falha ao criar novo usuário"
         colorMessage("danger", "InsertUser:. " + err)
     }
     return { res, errors }
@@ -46,15 +46,15 @@ async function validateAccount(user = { name: String, validateCode: String }) {
         if (fetchuser.validateCode == user.validateCode) {
             const updateUser = await prisma.user.update({ where: { name: user.name }, data: { validateAccount: true } })
 
-            res.message = "Usuário autenticado."
+            res.message = "Usuário autenticado"
         }
         else {
-            res.message = "Código incorreto."
+            res.message = "Código incorreto"
         }
     }
     catch (err) {
         errors.content = err
-        errors.message = "Falha ao conectar com o banco."
+        errors.message = "Falha ao conectar com o banco"
         colorMessage("danger", "validateAccount:. " + err)
     }
 
@@ -70,7 +70,7 @@ async function FetchListNames() {
     }
     catch (err) {
         errors.content.push(err)
-        errors.message = "Falha ao conectar-se ao banco de dados."
+        errors.message = "Falha ao conectar-se ao banco de dados"
         colorMessage("danger", "FetchListNames:. " + err)
     }
 
@@ -94,16 +94,16 @@ async function FetchUser(mode = "user", user = { name: String, email: String }) 
         }
         if (exists) {
             res.content = await prisma.user.findUnique({ where: { name: user.name, email: user.email}, select: select })
-            errors.message = (!res.content ? "Nome ou Email incorretos." : "")
-            res.message = (res.content?.validateAccount == false ? "Usuário não validado." : "")
+            errors.message = (!res.content ? "Nome ou Email incorretos" : "")
+            res.message = (res.content?.validateAccount == false ? "Usuário não validado" : "")
         }
         else {
-            errors.message = "Usuário não cadastrado."
+            errors.message = "Usuário não cadastrado"
         }
     }
     catch (err) {
         errors.content = err
-        errors.message = "Falha ao conectar-se ao banco de dados."
+        errors.message = "Falha ao conectar-se ao banco de dados"
         colorMessage("danger", "FetchUser:. " + err)
     }
     
@@ -119,7 +119,7 @@ async function DeleteUser(user = { name: String, email: String }) {
     }
     catch (err) {
         errors.content = err
-        errors.message = "Falha ao deletar usuário."
+        errors.message = "Falha ao deletar usuário"
         colorMessage("danger", "DeleteUser:. " + err)
     }
     return { res, errors }

@@ -64,7 +64,7 @@ app.route("/login")
             res.status(200).json({ message: data.res.message, mode: "warning" })
         }
         else {
-            res.cookie("preferences", `{"name":"${name}","email":"${email}"}`, { maxAge: 3600000 })
+            res.cookie("preferences", `{"name":"${name}","email":"${email}"}`)
             res.sendStatus(200)
         }
     })
@@ -159,6 +159,13 @@ app.route("/logout")
         res.redirect("/login")
     })
 
+//* CONFIG
+app.route("/config")
+    .get((req,res)=>{
+        const preferences = req.cookies["preferences"]
+        res.render("config.html", {preferences: preferences})
+    })
+
 //* GAME
 app.route("/")
     //? get page
@@ -174,7 +181,7 @@ io.on("connection", (socket) => {
         colorMessage("warning", `disconnected:. ${socket.id}`)
     })
 
-    socket.emit("message",{message:"Usuário logado.",mode:"success"})
+    socket.emit("message",{message:"Usuário logado",mode:"success"})
 });
 
 server.listen(PORT, () => {
