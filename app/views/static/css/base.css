@@ -1,5 +1,3 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap'); */
-
 @font-face {
     font-family: "Space Mono";
     src: url("../fonts/SpaceMono-Bold.ttf");
@@ -26,24 +24,28 @@
     font-style: italic;
 }
 
-*{
+/* *CONFIGURAÇÕES GERAIS */
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     font-family: "Space Mono", monospace;
 }
 
-body{
+body {
+    /* *LIGHT MODE */
     --background: #fefefe;
     --foreground: #123;
     --border: #444;
     --action: #F6B17A;
     --hover: #e99c5e;
-    --warning: #E9DE92;
-    --success: #B1C78C;
+    --warning: #FFD6A5;
+    --success: #CBE2B0;
+    --danger: #FF9B9B;
     --link: #483d8b;
-    --danger: #BE3144;
-    &.dark{
+
+    &.dark {
+        /* *DARK MODE */
         --background: #2c2c2c;
         --foreground: white;
     }
@@ -51,9 +53,10 @@ body{
     color: var(--foreground);
 }
 
-a{
+a, .link {
     color: var(--link);
     text-decoration: none;
+    cursor: pointer;
 }
 
 input,
@@ -63,4 +66,13 @@ button {
     border-radius: 3rem;
     border: 1px solid var(--border);
     outline: none;
+}
+
+.toastify{
+    .toast-close{
+        width: auto;
+        padding: 1rem;
+        opacity: 1;
+        color: var(--background);
+    }
 }

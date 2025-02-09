@@ -43,10 +43,9 @@ async function validateAccount(user = { name: String, validateCode: String }) {
 
         const fetchuser = await prisma.user.findUnique({ where: { name: user.name }, select: { validateCode: true } })
 
-        console.log(fetchuser.validateCode == user.validateCode)
         if (fetchuser.validateCode == user.validateCode) {
             const updateUser = await prisma.user.update({ where: { name: user.name }, data: { validateAccount: true } })
-            console.log(updateUser)
+
             res.message = "Usuário autenticado."
         }
         else {
@@ -78,9 +77,11 @@ async function FetchListNames() {
     return { res, errors }
 }
 
-async function FetchUser(user = { name: String, email: String }) {
+async function FetchUser(mode = "user", user = { name: String, email: String }) {
     const errors = { content: Object, message: "" }
-    const res = { content: Object, message: ""}
+    const res = { content: Object, message: "" }
+
+    const select = (mode == "code" ? { validateCode: true } : { name: true, email: true, validateAccount: true })
 
     try {
         const data = await FetchListNames()
@@ -92,7 +93,8 @@ async function FetchUser(user = { name: String, email: String }) {
             }
         }
         if (exists) {
-            res.content = await prisma.user.findUnique({ where: { name: user.name }, select: { name: true, email: true, validateAccount: true } })
+            res.content = await prisma.user.findUnique({ where: { name: user.name, email: user.email}, select: select })
+            errors.message = (!res.content ? "Nome ou Email incorretos." : "")
             res.message = (res.content?.validateAccount == false ? "Usuário não validado." : "")
         }
         else {
@@ -104,7 +106,7 @@ async function FetchUser(user = { name: String, email: String }) {
         errors.message = "Falha ao conectar-se ao banco de dados."
         colorMessage("danger", "FetchUser:. " + err)
     }
-
+    
     return { res, errors }
 }
 

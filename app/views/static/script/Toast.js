@@ -1,20 +1,26 @@
 const TOAST_CONFIG = {
-    text: "This is a toast",
-    duration: 2000,
+    duration: 3000,
     gravity: "top",
     position: "right",
+    gravity:"top",
+    close:true,
     style: {
+        padding: "0 0 0 1rem",
+        display: "flex",
+        flexFlow: "row nowrap",
+        justifyContent: "center",
+        alignItems: "center",
         background: "var(--success)",
-        border: "1px solid #444",
-        color: "black"
+        borderRadius:"0.25rem",
+        boxShadow: "0 0 .5rem #0001",
+        color:"var(--foreground)",
     },
-    onClick: function () { } // Callback after click
 }
 
-function toastMessage(mode="warning",text=""){
+function toastMessage(toast={mode:"warning",message:""}){
     try {
-        TOAST_CONFIG.text = text
-        TOAST_CONFIG.style.background = `var(--${mode})`
+        TOAST_CONFIG.text = toast.message
+        TOAST_CONFIG.style.background = `var(--${toast.mode})`
         Toastify(TOAST_CONFIG).showToast();
     }
     catch (err) {

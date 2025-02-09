@@ -1,5 +1,7 @@
 const form = document.querySelector("form")
 
+const timeout = 1000
+
 form.onsubmit = (event) => {
     event.preventDefault()
 
@@ -20,13 +22,13 @@ form.onsubmit = (event) => {
             .then(async (res) => {
                 const json = await res.json().catch(()=>{})
                 if (json){
-                    toastMessage(json?.mode, json?.message)
-                    res.ok ? setTimeout(()=>window.location.href = "/validate/"+name, 1000) : {}
+                    toastMessage(json)
+                    res.ok ? setTimeout(()=>window.location.href = `validate/${name}/${email}`, 1000) : {}
                 }
                 else if (res.ok) {
                     setTimeout(() => {
                         window.location.href = "/game"
-                    }, 1000);
+                    }, timeout);
                 }
             })
     }
@@ -42,11 +44,11 @@ form.onsubmit = (event) => {
                 try{
                     if (res.json) {
                         const json = await res.json()
-                        toastMessage(json?.mode, json?.message)
+                        toastMessage(json)
                         if (res.status == 200) {
                             setTimeout(() => {
-                                window.location.href = "/validate/" + name
-                            }, 1000);
+                                window.location.href = `/validate/${name}/${email}`
+                            }, timeout);
                         }
                     }
                 }
@@ -54,29 +56,44 @@ form.onsubmit = (event) => {
             })
     }
     else if (mode == "validateCode") {
-        const code = form.children[0].value
-
-        const nameCookie = getCookie("name")
+        const code = form.children[1].value
 
         fetch(path, {
             method: "POST",
             headers: {
                 "Content-type": "application/json"
             },
-            body: JSON.stringify({ name: nameCookie, validateCode: code })
+            body: JSON.stringify({ validateCode: code })
         })
             .then(async (res) => {
                 if (res.json) {
                     const json = await res.json()
-                    toastMessage(json?.mode, json?.message)
+                    toastMessage(json)
                     if (res.status == 200) {
                         setTimeout(() => {
                             window.location.href = "/login"
-                        }, 1000);
+                        }, timeout);
                     }
-                }
+                }body: JSON.stringify({ name: name})
             })
     }
+}
+
+async function codeResend(){
+    const path = window.location.href
+
+    fetch(path, {
+        method: "PUT",
+        headers:{
+            "Content-type":"application/json",
+        },
+    })
+    .then(async (res)=>{
+        const json = await res.json()
+        if(json){
+            toastMessage(json)
+        }
+    })
 }
 
 function getCookie(nameCookie = "") {
