@@ -49,8 +49,10 @@ body {
     --warning: #FFD6A5;
     --success: #CBE2B0;
     --danger: #FF9B9B;
+    --danger-hover: #f08a8a;
     --link: #483d8b;
     --container-size: 5rem;
+    --suspense-menu-size: 5rem;
 
     &.dark {
         /* *DARK MODE */
@@ -73,6 +75,7 @@ a,
     transition: 0.2s ease-out;
     padding: .5rem;
     border-radius: 1rem;
+    cursor: pointer;
 
     &:hover {
         background-color: #0001;
@@ -128,6 +131,14 @@ button {
     cursor: pointer;
     transition: 0.2s;
 
+    &.danger{
+        background-color: var(--danger);
+
+        &:hover{
+            background: var(--danger-hover);
+        }
+    }
+
     &:hover {
         background: var(--hover);
     }
@@ -148,4 +159,14 @@ li {
             background-color: transparent;
         }
     }
+}
+
+.on .toastify-top {
+    top: 5px;
+    right: 5px;
+}
+
+.toastify-right {
+    top: 5px;
+    right: 5px;
 }

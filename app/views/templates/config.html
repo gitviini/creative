@@ -11,7 +11,10 @@
     <nav>
         <ul class="container_actions">
             <li>
-                <a href="/" class="fa fa-gamepad fa-2x pressable"></a>
+                <a href="/" class="popup">
+                    <i class="fa fa-gamepad fa-2x"></i>
+                    <span>Voltar para o game</span>
+                </a>
             </li>
             <li>
                 <a href="/logout" class="popup">
@@ -29,6 +32,10 @@
             <input type="text" placeholder="Nome" minlength="3" required>
             <button>Salvar preferências</button>
         </form>
+    </div>
+    <div class="container_user_account_options">
+        <h2>Ações da conta</h2>
+        <button class="danger"><i class="fa fa-trash fa-fw"></i> Deletar conta</button>
     </div>
 </main>
 {% endblock body%}

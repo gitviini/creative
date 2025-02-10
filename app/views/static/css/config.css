@@ -22,9 +22,14 @@ header {
 }
 
 main {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
     padding: 20px;
 
-    .container_update_user {
+    .container_update_user, .container_user_account_options{
         display: flex;
         flex-flow: column;
         justify-content: center;

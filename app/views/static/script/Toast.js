@@ -1,9 +1,14 @@
 const TOAST_CONFIG = {
-    duration: 3000,
+    duration: 2500,
     gravity: "top",
     position: "right",
-    gravity:"top",
+    newWindow: true,
+    offset: {
+        x: "1rem",
+        y: "calc(-15px + .75rem)",
+    },
     close:true,
+    stopOnFocus: true,
     style: {
         padding: "0 0 0 1rem",
         display: "flex",
@@ -11,9 +16,10 @@ const TOAST_CONFIG = {
         justifyContent: "center",
         alignItems: "center",
         background: "var(--success)",
-        borderRadius:"0.25rem",
+        borderRadius: "0.25rem",
         boxShadow: "0 0 .5rem #0001",
-        color:"var(--foreground)",
+        color: "var(--foreground)",
+        transform: "",
     },
 }
 

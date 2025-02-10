@@ -1,5 +1,9 @@
 @import url("./base.css");
 
+html, body{
+    overflow: hidden;
+}
+
 .hud {
     position: fixed;
 }
@@ -17,9 +21,20 @@ header {
             height: 100%;
             display: flex;
             flex-flow: row;
-            justify-content: flex-start;
+            justify-content: space-between;
             align-items: center;
             padding: 0 20px;
+
+            li{
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: center;
+                align-items: center;
+                
+                img{
+                    width: 3rem;
+                }
+            }
 
             a {
                 color: var(--foreground);
@@ -35,12 +50,25 @@ header {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: calc(100% - var(--container-size));
+    height: calc(100% - var(--suspense-menu-size));
     padding: 20px;
 
     canvas {
         width: round((100% - var(--cube-size) * 2), var(--cube-size));
         height: round((100% - var(--cube-size) * 2), var(--cube-size));
         box-shadow: 0 0 .5rem #0002;
+    }
+}
+
+@media screen and (max-height:500px) {
+    body{
+        --suspense-menu-size: 0rem;
+    }
+    
+    .suspense_menu{
+        height: 0;
+        nav{
+            overflow: hidden;
+        }
     }
 }
