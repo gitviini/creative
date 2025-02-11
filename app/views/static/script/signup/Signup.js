@@ -1,9 +1,12 @@
 const form = document.querySelector("form")
 
-const timeout = 1000
+const timeout = 2500
 
 form.onsubmit = (event) => {
     event.preventDefault()
+
+    const button = form.querySelector("button")
+    button.classList.add("active")
 
     const mode = form.getAttribute("name")
 
@@ -20,12 +23,14 @@ form.onsubmit = (event) => {
             body: JSON.stringify({ name: name, email: email })
         })
             .then(async (res) => {
+                button.classList.remove("active")
                 const json = await res.json().catch(()=>{})
                 if (json){
                     toastMessage(json)
                     res.ok ? setTimeout(()=>window.location.href = `validate/${name}/${email}`, 1000) : {}
                 }
                 else if (res.ok) {
+                    toastMessage({message:"Usuário autenticado com sucesso",mode:"success"})
                     setTimeout(() => {
                         window.location.href = "/game"
                     }, timeout);
@@ -42,6 +47,7 @@ form.onsubmit = (event) => {
         })
             .then(async (res) => {
                 try{
+                    button.classList.remove("active")
                     if (res.json) {
                         const json = await res.json()
                         toastMessage(json)
@@ -66,6 +72,7 @@ form.onsubmit = (event) => {
             body: JSON.stringify({ validateCode: code })
         })
             .then(async (res) => {
+                button.classList.remove("active")
                 if (res.json) {
                     const json = await res.json()
                     toastMessage(json)
@@ -74,7 +81,7 @@ form.onsubmit = (event) => {
                             window.location.href = "/login"
                         }, timeout);
                     }
-                }body: JSON.stringify({ name: name})
+                }
             })
     }
 }

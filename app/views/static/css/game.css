@@ -60,6 +60,16 @@ header {
     }
 }
 
+@media screen and (max-width:400px){
+    ul{
+        li.title{
+            h2{
+                display: none;
+            }
+        }
+    }
+}
+
 @media screen and (max-height:500px) {
     body{
         --suspense-menu-size: 0rem;

@@ -3,7 +3,7 @@ import express from "express"
 import { Server } from "socket.io"
 import http from "http"
 import { getPath } from "./utils.js"
-import { InsertUser, validateAccount, FetchUser, DeleteUser } from "./app/controllers/DB.js"
+import { InsertUser, validateAccount, FetchUser, DeleteUser, UpdateUser } from "./app/models/DB.js"
 import { colorMessage } from "./utils.js"
 import { sendMail } from "./app/controllers/Email.js"
 
@@ -55,7 +55,7 @@ app.route("/login")
     .post(async (req, res) => {
         const { name, email } = req.body
 
-        const data = await FetchUser("user",{ name: name, email: email })
+        const data = await FetchUser("user", { name: name, email: email })
 
         if (data.errors.message) {
             res.status(500).json({ message: data.errors.message, mode: "danger" })
@@ -113,7 +113,7 @@ app.route("/validate/:name/:email")
         const name = req.params.name
         const { validateCode } = req.body
 
-        
+
         const data = await validateAccount({
             name: name,
             validateCode: validateCode
@@ -161,9 +161,32 @@ app.route("/logout")
 
 //* CONFIG
 app.route("/config")
-    .get((req,res)=>{
+    .get((req, res) => {
         const preferences = req.cookies["preferences"]
-        res.render("config.html", {preferences: preferences})
+        res.render("config.html", { preferences: preferences })
+    })
+    .put(async (req, res) => {
+        const preferences = JSON.parse(req.cookies["preferences"])
+
+        const { name } = req.body
+        const data = await UpdateUser(preferences, { name: name })
+
+        if (data.errors.message) {
+            return res.status(200).json({ message: data.errors.message, mode: "danger" })
+        }
+        res.cookie("preferences", `{"name":"${data.res.content?.name}","email":"${data.res.content?.email}"}`)
+        res.sendStatus(200)
+        /* .json({ message: data.res.message, mode: "success" }) */
+    })
+    .delete(async (req, res) => {
+        const preferences = JSON.parse(req.cookies["preferences"])
+
+        const data = await DeleteUser(preferences)
+        console.log(data)
+        if (data.errors.message) {
+            return res.status(500).json({ message: data.errors.message, mode: "danger" })
+        }
+        return res.status(200).json({ message: data.res.message, mode: "success" })
     })
 
 //* GAME
@@ -181,7 +204,7 @@ io.on("connection", (socket) => {
         colorMessage("warning", `disconnected:. ${socket.id}`)
     })
 
-    socket.emit("message",{message:"Usuário logado",mode:"success"})
+    /* socket.emit("message", { message: "Usuário logado", mode: "success" }) */
 });
 
 server.listen(PORT, () => {

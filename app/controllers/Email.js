@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
     }
 })
 
-async function sendMail(options = { from: String, to: String, subject: String, html: String }, code=String) {
+async function sendMail(options = { from: string, to: string, subject: string, html: "" }, code=String) {
     options.html = `\
 <div>\
 <h1>Olá, Novo usuário.</h1>\

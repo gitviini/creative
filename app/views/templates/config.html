@@ -13,7 +13,7 @@
             <li>
                 <a href="/" class="popup">
                     <i class="fa fa-gamepad fa-2x"></i>
-                    <span>Voltar para o game</span>
+                    <span>Voltar</span>
                 </a>
             </li>
             <li>
@@ -29,13 +29,14 @@
     <div class="container_update_user">
         <h2>Informações do usuário</h2>
         <form action="" method="put">
-            <input type="text" placeholder="Nome" minlength="3" required>
+            <label for="name">Nome de usuário</label>
+            <input type="text" placeholder="Nome" id="name" name="name" minlength="3" required>
             <button>Salvar preferências</button>
         </form>
     </div>
     <div class="container_user_account_options">
         <h2>Ações da conta</h2>
-        <button class="danger"><i class="fa fa-trash fa-fw"></i> Deletar conta</button>
+        <button class="danger deleteUser"><i class="fa fa-trash fa-fw"></i> Deletar conta</button>
     </div>
 </main>
 {% endblock body%}

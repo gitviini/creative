@@ -115,6 +115,11 @@ a,
     }
 }
 
+label{
+    &::before{
+        content: "";
+    }
+}
 
 input,
 button {
@@ -130,6 +135,12 @@ button {
     background: var(--action);
     cursor: pointer;
     transition: 0.2s;
+    pointer-events: all;
+
+    &.active {
+        pointer-events: none;
+        opacity: .5;
+    }
 
     &.danger{
         background-color: var(--danger);
