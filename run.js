@@ -20,7 +20,7 @@ const server = http.createServer(app)
 const io = new Server(server)
 const PORT = 3000
 const urls = {
-    logged: ["/", "/config", "/logout"],
+    logged: ["/", "/config", "/logout", "/editor", "/editor/sprite"],
 }
 const secretKey = "#pP#*ndZ9gqEF2S"
 app.set("view engine", "njk")
@@ -163,7 +163,7 @@ app.route("/logout")
 app.route("/config")
     .get((req, res) => {
         const preferences = req.cookies["preferences"]
-        res.render("config.html", { preferences: preferences })
+        res.render("game/config.html", { preferences: preferences })
     })
     .put(async (req, res) => {
         const preferences = JSON.parse(req.cookies["preferences"])
@@ -193,7 +193,19 @@ app.route("/config")
 app.route("/")
     //? get page
     .get((req, res) => {
-        res.render("game.html")
+        res.render("game/game.html")
+    })
+
+app.route("/editor")
+    //? get page
+    .get((req, res) => {
+        res.render("editor/editor.html")
+    })
+
+app.route("/editor/sprite")
+    //? get page
+    .get((req, res) => {
+        res.render("editor/sprite.html")
     })
 
 //* SOCKET MANAGER
@@ -204,7 +216,7 @@ io.on("connection", (socket) => {
         colorMessage("warning", `disconnected:. ${socket.id}`)
     })
 
-    /* socket.emit("message", { message: "Usuário logado", mode: "success" }) */
+    	/* socket.emit("message", { message: "Usuário logado", mode: "success" }) */
 });
 
 server.listen(PORT, () => {

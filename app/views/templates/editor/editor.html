@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="/css/editor.css">
+{% endblock head %}
+
+{% block body %}
+<header>
+    <nav>
+        <ul class="container_actions">
+            <li>
+                <a href="/" class="popup">
+                    <i class="fa fa-home fa-2x"></i>
+                    <span>Voltar</span>
+                </a>
+            </li>
+            <li>
+                <a href="/config" class="popup">
+                    <i class="fa fa-gear fa-2x"></i>
+                    <span>Configurações</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <h1>Funções de edição</h1>
+    <div class="container_editor_tools">
+        <a href="/editor/sprite" class="pressable card">
+            <h2>Editor de Sprites</h2>
+            <section>
+                <p>Um editor de sprites e animações 2d.</p>
+            </section>
+        </a>
+        <a href="/" class="pressable card">
+            <h2>Editor de tileMap</h2>
+            <section>
+                <p>Um editor de mapas, onde a imaginação é o limite.</p>
+            </section>
+        </a>
+    </div>
+</main>
+{% endblock body %}

@@ -29,35 +29,11 @@ main {
     gap: 1rem;
     padding: 20px;
 
-    .container_color_mode,
-    .container_update_user,
-    .container_user_account_options,
-    .container_update_mode {
+    .container_editor_tools{
         display: flex;
-        flex-flow: column;
+        flex-flow: row;
         justify-content: center;
-        align-items: flex-start;
+        align-items: center;
         gap: 1rem;
-
-        form {
-            display: flex;
-            flex-flow: column;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 1rem;
-
-            input {
-                width: auto;
-            }
-        }
-
-        .container_color_mode_options {
-            display: flex;
-            flex-flow: row;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-        }
     }
-
 }

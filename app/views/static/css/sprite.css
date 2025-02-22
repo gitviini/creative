@@ -1,0 +1,87 @@
+@import url("./base.css");
+
+header, .container {
+    &.top{
+        top: 0;
+        border-bottom: 1px solid var(--border);
+        width: 100%;
+        ul {
+            flex-flow: row;
+        }
+    }
+    &.bottom{
+        border-top: 1px solid var(--border);
+        bottom: 0;
+        width: 100%;
+        ul {
+            flex-flow: row;
+        }
+    }
+    &.left{
+        top: 5rem;
+        left: 0;
+        width: 10rem;
+        height: calc(100% - 5rem);
+        border-right: 1px solid var(--border);
+        ul {
+            flex-flow: column;
+        }
+    }
+    &.right{
+        top: 5rem;
+        right: 0;
+        width: 10rem;
+        height: calc(100% - 5rem);
+        border-left: 1px solid var(--border);
+        ul {
+            flex-flow: column;
+        }
+    }
+
+    overflow: hidden;
+    position: fixed;
+    height: var(--container-size);
+    z-index: 2;
+    nav {
+        width: 100%;
+        height: 100%;
+
+        ul {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+    }
+}
+
+main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+canvas {
+	image-rendering: pixelated;
+    border: 1px solid gray;
+}
+
+.bar {
+    position: fixed;
+    width: 100%;
+    padding: 10px;
+    background-color: antiquewhite;
+
+    &.bottom {
+        bottom: 0;
+    }
+    &.top {
+        top: 0;
+    }
+}
