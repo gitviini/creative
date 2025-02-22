@@ -97,12 +97,12 @@ a,
     }
 
     &.card {
+        min-width: 300px;
+        border: 1px solid var(--border);
+        box-shadow: 0 5px 10px #0003;
         &:hover {
             translate: 0 -0.5rem;
         }
-
-        border: 1px solid var(--border);
-        box-shadow: 0 5px 10px #0003;
     }
 
     &.choose {
@@ -278,6 +278,17 @@ li {
 }
 
 @media screen and (max-width:400px) {
+
+    .popup{
+        transition: none;
+        span{
+            display: none;
+        }
+        &:hover{
+            transition: none;
+        }
+    }
+
     ul {
         li.title {
             h2 {
@@ -288,9 +299,9 @@ li {
 
     .containerMenu{
         nav ul{
+            justify-content: center;
             padding: 1rem;
             align-items: center;
-
             li{
                 width: 100%;
             }
