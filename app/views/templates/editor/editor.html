@@ -8,21 +8,17 @@
 <header>
     <nav>
         <ul class="container_actions">
-            <li>
-                <a href="/" class="popup">
-                    <i class="fa fa-home fa-2x"></i>
-                    <span>Voltar</span>
-                </a>
+            <li class="title">
+                <i class="fa fa-paint-brush fa-2xl"></i>
+                <h2>Editor</h2>
             </li>
             <li>
-                <a href="/config" class="popup">
-                    <i class="fa fa-gear fa-2x"></i>
-                    <span>Configurações</span>
-                </a>
+                {% include "module/toggleMenu.html" %}
             </li>
         </ul>
     </nav>
 </header>
+{% include "module/containerMenu.html" %}
 <main>
     <h1>Funções de edição</h1>
     <div class="container_editor_tools">

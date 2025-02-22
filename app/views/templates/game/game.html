@@ -16,38 +16,12 @@
                 <h2>Creative</h2>
             </li>
             <li>
-                <span class="popup toggleMenu">
-                    <i class="fa fa-bars fa-2x"></i>
-                    <span>Menu</span>
-                </span>
+                {% include "module/toggleMenu.html" %}
             </li>
         </ul>
     </nav>
 </header>
-<div class="container_menu">
-    <nav>
-        <ul>
-            <li>
-                <span class="popup closeMenu">
-                    <i class="fa fa-close fa-2x"></i>
-                    <span>Fechar</span>
-                </span>
-            </li>
-            <li>
-                <a href="/config" class="pressable">
-                    <i class="fa fa-gear"></i>
-                    Configurações
-                </a>
-            </li>
-            <li>
-                <a href="/editor" class="pressable">
-                    <i class="fa fa-paint-brush"></i>
-                    Editor
-                </a>
-            </li>
-        </ul>
-    </nav>
-</div>
+{% include "module/containerMenu.html" %}
 <div class="display">
     <canvas></canvas>
 </div>

@@ -18,20 +18,20 @@ header, .container {
         }
     }
     &.left{
-        top: 5rem;
+        top: 0;
         left: 0;
         width: 10rem;
-        height: calc(100% - 5rem);
+        height: 100%;
         border-right: 1px solid var(--border);
         ul {
             flex-flow: column;
         }
     }
     &.right{
-        top: 5rem;
+        top: 0;
         right: 0;
         width: 10rem;
-        height: calc(100% - 5rem);
+        height: 100%;
         border-left: 1px solid var(--border);
         ul {
             flex-flow: column;

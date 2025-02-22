@@ -6,21 +6,6 @@
 {% endblock head %}
 
 {% block body %}
-<div class="container top">
-    <nav>
-        <ul>
-            <li>
-                <a href="/editor" class="popup">
-                    <i class="fa fa-home fa-2x" aria-hidden="true"></i>
-                    <span>Voltar</span>
-                </a>
-            </li>
-            <li>
-                <input type="number" class="scale">
-            </li>
-        </ul>
-    </nav>
-</div>
 <div class="container left">
     <nav>
         <ul>
@@ -33,9 +18,12 @@
     </nav>
 </div>
 <div class="container right">
+    
     <nav>
         <ul>
-            <li></li>
+            <li>
+                {% include "module/toggleMenu.html" %}
+            </li>
             <li>
 				<span class="positionMouse">
 			        x: 0, y: 0
@@ -44,10 +32,9 @@
         </ul>
     </nav>
 </div>
+{% include "module/containerMenu.html" %}
 <main>
     <canvas></canvas>
 </main>
 </body>
-<script>
-</script>
 {% endblock body %}

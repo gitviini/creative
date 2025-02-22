@@ -10,21 +10,17 @@
 <header>
     <nav>
         <ul class="container_actions">
-            <li>
-                <a href="/" class="popup">
-                    <i class="fa fa-gamepad fa-2x"></i>
-                    <span>Voltar</span>
-                </a>
+            <li class="title">
+                <i class="fa fa-gear fa-2xl"></i>
+                <h2>Configurações</h2>
             </li>
             <li>
-                <a href="/logout" class="popup">
-                    <i class="fa fa-sign-out fa-2x"></i>
-                    <span>Sair</span>
-                </a>
+                {% include "module/toggleMenu.html" %}
             </li>
         </ul>
     </nav>
 </header>
+{% include "module/containerMenu.html" %}
 <main>
     <div class="container_update_user">
         <h2>Informações do usuário</h2>
