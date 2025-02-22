@@ -29,7 +29,7 @@ app.set("view engine", "njk")
 app.use(helmet({ contentSecurityPolicy: false }))
 nunjucks.configure(getPath("/views/templates/"), { autoescape: true, express: app, watch: true })
 app.use(cookieParser(secretKey))
-app.use(favicon(getPath("/views/static/img/favicon.png")))
+app.use(favicon(getPath("/views/static/img/light.png")))
 app.use(bodyParser.json())
 app.use(express.static(getPath("/views/static/")))
 app.use((req, res, next) => {

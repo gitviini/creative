@@ -1,8 +1,12 @@
-//* ColorScheme Prefer User 
-const colorScheme = window.matchMedia('(prefers-color-scheme: dark)')
-colorScheme.matches ? document.body.classList.add("dark") : document.body.classList.remove("dark")
+//* ColorScheme Prefer User
+const colorScheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+colorScheme ? document.body.classList.add("dark") : document.body.classList.remove("dark")
 
-console.log(colorScheme)
+//* Logo configure
+try{
+    const logo = document.querySelector(".logo")
+    colorScheme ? logo.src = "/img/dark.png" : logo.src = "/img/light.png"
+}catch(err){}
 
 //* Menu
 try{

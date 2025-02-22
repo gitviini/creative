@@ -41,6 +41,7 @@ header, .container {
     overflow: hidden;
     position: fixed;
     height: var(--container-size);
+    background-color: var(--background-container);
     z-index: 2;
     nav {
         width: 100%;
