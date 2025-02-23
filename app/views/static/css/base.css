@@ -63,7 +63,9 @@ body {
         --background-container: #131922;
         --foreground: #f0f6fc;
         --action: #b87a09;
-        --hover: #dd9714;
+        --hover: #b97f11;
+        --warning: #b87a09;
+        --success: #7b965d;
         --danger: #d03533;
         --danger-hover: #fa5e55;
         --border: #fff4;
@@ -102,6 +104,7 @@ a,
         min-width: 300px;
         border: 1px solid var(--border);
         box-shadow: 0 5px 10px #0003;
+
         &:hover {
             translate: 0 -0.5rem;
         }
@@ -281,12 +284,14 @@ li {
 
 @media screen and (max-width:400px) {
 
-    .popup{
+    .popup {
         transition: none;
-        span{
+
+        span {
             display: none;
         }
-        &:hover{
+
+        &:hover {
             transition: none;
         }
     }
@@ -299,20 +304,23 @@ li {
         }
     }
 
-    .containerMenu{
-        nav ul{
+    .containerMenu {
+        nav ul {
             justify-content: center;
             padding: 1rem;
             align-items: center;
-            li{
+
+            li {
                 width: 100%;
             }
-            li .pressable{
+
+            li .pressable {
                 border: 1px solid var(--border);
                 width: 100%;
             }
         }
-        &.open{
+
+        &.open {
             width: 100%;
         }
     }

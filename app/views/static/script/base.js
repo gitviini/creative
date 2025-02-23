@@ -16,5 +16,6 @@ try{
     
     toggleMenu.onclick = () => containerMenu.classList.add("open")
     closeMenu.onclick = () => containerMenu.classList.remove("open")
+    containerMenu.onmouseleave = () => containerMenu.classList.remove("open")
 }
 catch(err){}

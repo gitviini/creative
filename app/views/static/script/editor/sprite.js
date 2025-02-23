@@ -4,14 +4,7 @@ window.oncontextmenu = (e) => {
 }
 
 const positionMouse = document.querySelector(".positionMouse")
-const inputScale = document.querySelector(".scale")
 const canvas = document.querySelector("canvas")
-
-inputScale.onchange = (e) => {
-    canvasInstance.scale = e.target.value
-    canvasInstance.resize()
-    canvasInstance.recover()
-}
 
 class Canvas {
     constructor(CanvasElement = HTMLCanvasElement) {
@@ -35,28 +28,32 @@ class Canvas {
             {},
         ]
         this.resize()
+        this.grid()
         this.getClick()
     }
 
+    //* Save canvas conteiner image
     save() {
         const img = new Image()
         img.src = this.canvas.toDataURL()
         this.drawRecover.push(img)
     }
 
+    //* Recover image had saved before action (resize and another actions)
     recover() {
         const imgRecover = this.drawRecover[this.drawRecover.length - 1]
         this.ctx.drawImage(imgRecover, 0, 0)
     }
 
+    //* Resize canvas conteiner
     resize() {
         this.canvas.width = this.screen.width
         this.canvas.height = this.screen.height
         this.canvas.style.width = `${this.screen.width * this.scale}px`
         this.canvas.style.height = `${this.screen.height * this.scale}px`
-        inputScale.value = this.scale
     }
 
+    //* Handler to tool 
     draw() {
         if (this.mouseDown) {
             switch (this.tool.mode) {
@@ -74,6 +71,7 @@ class Canvas {
         }
     }
 
+    //* Get position mouse
     getPositionMouse(e) {
         this.tool.position = {
             x: Math.floor((e.x - this.canvas.offsetLeft) / this.scale),
@@ -83,6 +81,7 @@ class Canvas {
         positionMouse.innerHTML = `x: ${this.tool.position.x}, y: ${this.tool.position.y}`
     }
 
+    //* Handler to get click user and it do some action
     getClick() {
         this.canvas.onmousemove = (e) => {
             this.getPositionMouse(e)
@@ -97,6 +96,16 @@ class Canvas {
         this.canvas.onmouseup = () => {
             this.save()
             this.mouseDown = false
+        }
+    }
+
+    //* Draw grid effect
+    grid() {
+        for(let r = 0; r < this.screen.width; r++){
+            for(let c = 0; c < this.screen.height; c++){
+                this.ctx.fillStyle = (r % 2 == 0 ? (c % 2 == 0 ? "#f3f3f3" : "#d0d0d0") : (c % 2 == 0 ? "#d0d0d0" : "#f3f3f3"))
+                this.ctx.fillRect(r,c,this.pixel,this.pixel)
+            }
         }
     }
 
