@@ -172,9 +172,11 @@ class SpriteEditor {
             }
             console.log(this.tool.position)
         }
-        this.tool.position = {
-            x: Math.floor((e.x - this.canvas.offsetLeft) / this.scale),
-            y: Math.floor((e.y - this.canvas.offsetTop) / this.scale)
+        else{
+            this.tool.position = {
+                x: Math.floor((e.x - this.canvas.offsetLeft) / this.scale),
+                y: Math.floor((e.y - this.canvas.offsetTop) / this.scale)
+            }
         }
 
         positionMouse.innerHTML = `x: ${this.tool.position.x}, y: ${this.tool.position.y}`
