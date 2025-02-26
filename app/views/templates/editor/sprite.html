@@ -6,38 +6,60 @@
 {% endblock head %}
 
 {% block body %}
-<div class="container left">
+{% include "module/toggleMenu.html" %}
+<div class="container bottom">
     <nav>
         <ul>
-            <li class="container_tools">
-                <h2>Tools</h2>
-                <div class="toggleContainer left tools pressable choose">
-                    <i class="fa fa-tools fa-xl"></i>
+            <li class="containerTools">
+                <div class="containerToolsOptions">
+                    <div class="close tool pressable">
+                        <i class="fa fa-close fa-2x"></i>
+                    </div>
                 </div>
-                <div class="container_tools_options">
+                <div class="popup select">
+                    <img src="" alt="image tool selected">
                 </div>
             </li>
-        </ul>
-    </nav>
-</div>
-<div class="container right">
-    <div class="toggleContainerRight"></div>
-    <nav>
-        <ul>
-            <li>
-                {% include "module/toggleMenu.html" %}
+            <li class="containerColor">
+                <label for="color">
+                    <span class="color"></span>
+                </label>
+                <input type="color" name="color" id="color">
             </li>
-            <li>
-				<span class="positionMouse">
-			        x: 0, y: 0
-			    </span>
-			</li>		
+            <li class="containerRangeInput">
+                <label for="range">6px</label>
+                <input type="range" value="1" class="range" min="1" max="10" name="range" id="range">
+            </li>
+            <li class="containerFile">
+                <div class="containerFileOptions">
+                    <div class="close file pressable">
+                        <i class="fa fa-close fa-2x"></i>
+                    </div>
+                    <div class="file save pressable">
+                        <img src="https://cdn-icons-png.freepik.com/512/7039/7039737.png?ga=GA1.1.553086067.1740610280" alt="file save">
+                    </div>
+                    <div class="file config pressable">
+                        <img src="https://cdn-icons-png.freepik.com/512/7039/7039819.png?ga=GA1.1.553086067.1740610280" alt="file config"> 
+                    </div>
+                    <div class="file delete pressable">
+                        <img src="https://cdn-icons-png.freepik.com/512/7039/7039822.png?ga=GA1.1.553086067.1740610280" alt="file delete">
+                    </div>
+                </div>
+                <div class="popup select">
+                    <img src="https://cdn-icons-png.freepik.com/512/7039/7039841.png?ga=GA1.1.553086067.1740610280"
+                        alt="image file">
+                </div>
+            </li>
+            <li class="positionMouse">
+                x: 0, y: 0
+            </li>
         </ul>
     </nav>
 </div>
 {% include "module/containerMenu.html" %}
 <main>
-    <canvas></canvas>
+    <canvas class="gridBack"></canvas>
+    <canvas class="drawFront"></canvas>
 </main>
 </body>
 {% endblock body %}

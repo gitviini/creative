@@ -133,6 +133,20 @@ a,
     transition: .6s ease, background-color 1s ease;
     cursor: pointer;
 
+    &.choose {
+        border: 1px solid var(--border);
+
+        &.choosed {
+            background-color: var(--pressable);
+            gap: .5rem;
+            span {
+                opacity: 1;
+                width: 100%;
+                visibility: visible;
+            }
+        }
+    }
+
     span {
         width: 0;
         opacity: 0;
@@ -160,11 +174,12 @@ a,
     overflow: hidden;
     top: 0;
     right: 0;
-    border-left: 1px solid var(--border);
     background-color: var(--background-container);
     z-index: 99;
+    overflow: hidden auto;
 
     &.open {
+        border-left: 1px solid var(--border);
         width: auto;
     }
 
@@ -192,7 +207,6 @@ a,
     }
 }
 
-
 label {
     &::before {
         content: "";
@@ -210,7 +224,12 @@ select {
 }
 
 input {
+    cursor: pointer;
     background-color: var(--pressable);
+    
+    &[type="range"]{
+        padding: 0;
+    }
 }
 
 button {

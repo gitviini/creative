@@ -36,5 +36,39 @@ main {
         grid-auto-rows: auto;
         place-items: normal;
         gap: 1rem;
+
+        .card{
+            display: flex;
+            flex-flow: row;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 1rem;
+            
+            img{
+                width: var(--container-size);
+                height: var(--container-size);
+                border-radius: .5rem;
+                border: 1px solid var(--border);
+            }
+
+            h2{
+                width: calc(100% - var(--container-size));
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 500px) {
+    main .container_editor_tools .card {
+        flex-flow: column-reverse;
+
+        img{
+            width: 100%;
+            height: inherit;
+        }
+
+        h2{
+            width: 100%;
+        }
     }
 }

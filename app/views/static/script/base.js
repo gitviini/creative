@@ -1,3 +1,9 @@
+//* ContextMenu
+window.oncontextmenu = (e) => {
+    // Prevent defaut menu
+    e.preventDefault()
+}
+
 //* ColorScheme Prefer User
 // Handler function to set colorscheme
 function handlerColorScheme(colorScheme) { 
@@ -13,6 +19,7 @@ colorSchemeInstance.onchange = (event) => handlerColorScheme(event.matches)
 //* Logo configure
 try {
     const logo = document.querySelector(".logo")
+    // Set image according to device's theme
     colorScheme ? logo.src = "/img/dark.png" : logo.src = "/img/light.png"
 } catch (err) { }
 
@@ -22,8 +29,11 @@ try {
     const closeMenu = document.querySelector(".closeMenu")
     const containerMenu = document.querySelector(".containerMenu")
 
+    // Open menu
     toggleMenu.onclick = () => containerMenu.classList.add("open")
+    // Close menu
     closeMenu.onclick = () => containerMenu.classList.remove("open")
+    // If mouse leave menu, It'll close.
     containerMenu.onmouseleave = () => containerMenu.classList.remove("open")
 }
 catch (err) { }
