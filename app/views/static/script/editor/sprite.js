@@ -165,6 +165,13 @@ class SpriteEditor {
 
     //* Get position mouse
     getPositionMouse(e) {
+        if(e.touches){
+            this.tool.position = {
+                x: Math.floor((e.touches[0].clientX - this.canvas.offsetLeft) / this.scale),
+                y: Math.floor((e.touches[0].clientY - this.canvas.offsetTop) / this.scale)
+            }
+            console.log(this.tool.position)
+        }
         this.tool.position = {
             x: Math.floor((e.x - this.canvas.offsetLeft) / this.scale),
             y: Math.floor((e.y - this.canvas.offsetTop) / this.scale)
@@ -175,19 +182,26 @@ class SpriteEditor {
 
     //* Handler to get click user and it do some action
     getClick() {
-        this.canvas.onmousemove = (e) => {
+        const move = (e) => {
             this.getPositionMouse(e)
             this.draw()
         }
-        this.canvas.onmousedown = (e) => {
+        const init = (e) => {
             this.getPositionMouse(e)
             this.mouseDown = true
             this.draw()
         }
-        this.canvas.onmouseup = () => {
+        const end = (e) => {
             this.save()
             this.mouseDown = false
         }
+
+        this.canvas.addEventListener("touchmove", move)
+        this.canvas.onmousemove = move
+        this.canvas.addEventListener("touchstart", init)
+        this.canvas.onmousedown = init
+        this.canvas.addEventListener("touchend", end)
+        this.canvas.onmouseup = end
     }
 
     //* Draw grid effect
