@@ -191,6 +191,7 @@ header,
                 flex-flow: row;
                 gap: .5rem;
                 padding: 0 1rem;
+                width: calc(var(--container-size) * 2);
             }
 
             li {
@@ -217,6 +218,7 @@ header,
 .toggleMenu {
     position: fixed;
     inset: 10px 10px auto auto;
+    z-index: 99;
 }
 
 main {

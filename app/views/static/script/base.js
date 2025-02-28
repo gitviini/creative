@@ -6,8 +6,8 @@ window.oncontextmenu = (e) => {
 
 //* ColorScheme Prefer User
 // Handler function to set colorscheme
-function handlerColorScheme(colorScheme) { 
-    colorScheme ? document.body.classList.add("dark") : document.body.classList.remove("dark") 
+function handlerColorScheme(colorScheme) {
+    colorScheme ? document.body.classList.add("dark") : document.body.classList.remove("dark")
 }
 // Instance of window.matchMedia
 const colorSchemeInstance = window.matchMedia('(prefers-color-scheme: dark)')
@@ -35,5 +35,12 @@ try {
     closeMenu.onclick = () => containerMenu.classList.remove("open")
     // If mouse leave menu, It'll close.
     containerMenu.onmouseleave = () => containerMenu.classList.remove("open")
+}
+catch (err) { }
+
+//* Container Popup
+try {
+    const containerPopup = document.querySelector(".containerPopup")
+    containerPopup.querySelector(".close").onclick = () => containerPopup.classList.remove("open")
 }
 catch (err) { }

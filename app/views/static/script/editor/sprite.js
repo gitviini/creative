@@ -14,6 +14,8 @@ class SpriteEditor {
         //* Variables and infos
         this.ctx = this.canvas.getContext("2d")
         this.scale = 16
+
+        //* Editor and image
         this.screen = {
             width: 16,
             height: 16
@@ -21,31 +23,85 @@ class SpriteEditor {
         this.pixel = 1
         this.drawRecover = []
 
-        // Tool and tools list
-        this.tool = {
-            mode: "paint",
-            fill: "#000",
-            icon: "https://cdn-icons-png.freepik.com/512/3478/3478925.png?ga=GA1.1.1067191136.1740447437",
-            position: { x: 0, y: 0 }
-        }
+        //* Tool and tools list
         this.tools = [
             {
                 mode: "paint",
                 fill: "#000",
-                icon: "https://cdn-icons-png.freepik.com/512/3478/3478925.png?ga=GA1.1.1067191136.1740447437",
-                position: { x: 0, y: 0 }
+                icon: "https://cdn-icons-png.freepik.com/512/2123/2123462.png?ga=GA1.1.553086067.1740610280",
+                position: { x: 0, y: 0 },
+                action: () => {
+                    this.ctx.fillStyle = this.tool.fill
+                    this.ctx.fillRect(this.tool.position.x, this.tool.position.y, this.pixel, this.pixel)
+                }
             },
             {
                 mode: "eraser",
                 fill: "#fff",
-                icon: "https://cdn-icons-png.freepik.com/512/3478/3478983.png?ga=GA1.1.1067191136.1740447437",
-                position: { x: 0, y: 0 }
+                icon: "https://cdn-icons-png.freepik.com/512/2123/2123513.png?ga=GA1.1.553086067.1740610280",
+                position: { x: 0, y: 0 },
+                action: () => {
+                    this.ctx.clearRect(this.tool.position.x, this.tool.position.y, this.pixel, this.pixel)
+                }
+            },
+            {
+                mode: "paint roller",
+                fill: "#000",
+                icon: "https://cdn-icons-png.freepik.com/512/2123/2123528.png?ga=GA1.1.553086067.1740610280",
+                position: { x: 0, y: 0 },
+                action: () => {
+
+                }
             },
             {
                 mode: "move",
                 fill: undefined,
-                icon: "https://cdn-icons-png.freepik.com/512/3478/3478920.png?ga=GA1.1.1067191136.1740447437",
-                position: { x: 0, y: 0 }
+                icon: "https://cdn-icons-png.freepik.com/512/2123/2123500.png?ga=GA1.1.553086067.1740610280",
+                position: { x: 0, y: 0 },
+                action: () => {
+                    
+                }
+            },
+        ]
+        this.tool = this.tools[0]
+
+        //* File and file features
+        this.file = {
+            name: "document",
+        }
+
+        this.fileFeatures = [
+            {
+                mode: "upload",
+                icon: "https://cdn-icons-png.freepik.com/512/7039/7039815.png?ga=GA1.1.553086067.1740610280",
+                action: () => {
+                    const containerPopup = document.querySelector(".containerPopup")
+                    const upload = document.createElement("file")
+                    
+                    containerPopup.classList.add("open")
+                }
+            },
+            {
+                mode: "save",
+                icon: "https://cdn-icons-png.freepik.com/512/7039/7039737.png?ga=GA1.1.553086067.1740610280",
+                action: () => {
+                    this.save()
+                    const img = this.drawRecover[this.drawRecover.length - 1]
+                    const handlerLink = document.createElement("a")
+                    handlerLink.href = img
+                    handlerLink.download = this.file.name
+                    handlerLink.click()
+                }
+            },
+            {
+                mode: "set",
+                icon: "https://cdn-icons-png.freepik.com/512/7039/7039819.png?ga=GA1.1.553086067.1740610280",
+                action: () => { }
+            },
+            {
+                mode: "delete",
+                icon: "https://cdn-icons-png.freepik.com/512/7039/7039822.png?ga=GA1.1.553086067.1740610280",
+                action: () => { }
             },
         ]
 
@@ -76,7 +132,7 @@ class SpriteEditor {
     getPixelSize() {
         const pixelsize = document.querySelector("input[type='range'")
         document.querySelector("label[for='range']").innerHTML = `${this.pixel}px`
-        pixelsize.onchange = (e) =>{
+        pixelsize.onchange = (e) => {
             this.pixel = e.target.value
             document.querySelector("label[for='range']").innerHTML = `${this.pixel}px`
         }
@@ -84,7 +140,19 @@ class SpriteEditor {
 
     setContainerFile() {
         const containerFileOptions = containerFile.querySelector(".containerFileOptions")
-        containerFile.querySelector(".select").onclick = () => containerFileOptions.classList.add("open")
+
+        this.fileFeatures.forEach(feature => {
+            const div = document.createElement("div")
+            div.setAttribute("class", "pressable tool")
+            div.innerHTML += `<img src="${feature.icon}" alt="${feature.mode}"></img>`
+            div.onclick = feature.action
+            containerFileOptions.appendChild(div)
+        })
+
+        containerFile.querySelector(".select").onclick = () => {
+            containerFileOptions.classList.add("open")
+            containerTools.querySelector(".containerToolsOptions").classList.remove("open")
+        }
         containerFileOptions.querySelector(".close").onclick = () => containerFileOptions.classList.remove("open")
     }
 
@@ -93,6 +161,7 @@ class SpriteEditor {
         const selectTool = containerTools.querySelector(".select")
         selectTool.onclick = () => {
             containerTools.querySelector(".containerToolsOptions").classList.add("open")
+            containerFile.querySelector(".containerFileOptions").classList.remove("open")
         }
         selectTool.querySelector("img").setAttribute("src", tool.icon)
         this.tool = tool
@@ -115,10 +184,6 @@ class SpriteEditor {
             }
             containerToolsOptions.appendChild(div)
         })
-    }
-
-    downloadImg(){
-
     }
 
     //* Save canvas conteiner image
@@ -146,33 +211,16 @@ class SpriteEditor {
         this.canvas.style.height = `${this.screen.height * this.scale}px`
     }
 
-    //* Handler to tool 
-    draw() {
-        if (this.mouseDown) {
-            switch (this.tool.mode) {
-                case "paint":
-                    this.ctx.fillStyle = this.tool.fill
-                    this.ctx.fillRect(this.tool.position.x, this.tool.position.y, this.pixel, this.pixel)
-                    break
-                case "eraser":
-                    this.ctx.clearRect(this.tool.position.x, this.tool.position.y, this.pixel, this.pixel)
-                    break
-                default:
-                    break
-            }
-        }
-    }
-
     //* Get position mouse
     getPositionMouse(e) {
-        if(e.touches){
+        if (e.touches) {
             this.tool.position = {
                 x: Math.floor((e.touches[0].clientX - this.canvas.offsetLeft) / this.scale),
                 y: Math.floor((e.touches[0].clientY - this.canvas.offsetTop) / this.scale)
             }
             console.log(this.tool.position)
         }
-        else{
+        else {
             this.tool.position = {
                 x: Math.floor((e.x - this.canvas.offsetLeft) / this.scale),
                 y: Math.floor((e.y - this.canvas.offsetTop) / this.scale)
@@ -186,16 +234,20 @@ class SpriteEditor {
     getClick() {
         const move = (e) => {
             this.getPositionMouse(e)
-            this.draw()
+            this.mouseDown.progress ? this.tool.action() : {}
         }
         const init = (e) => {
             this.getPositionMouse(e)
-            this.mouseDown = true
-            this.draw()
+            this.mouseDown = {
+                target: e.target,
+                progress: true,
+                initPosition: this.tool.position
+            }
+            this.tool.action()
         }
         const end = (e) => {
             this.save()
-            this.mouseDown = false
+            this.mouseDown.progress = false
         }
 
         this.canvas.addEventListener("touchmove", move)
