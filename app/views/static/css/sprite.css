@@ -129,12 +129,14 @@ header,
                     bottom: var(--container-size);
                     position: fixed;
                     width: 0;
+                    max-width: calc(var(--container-size) * 5);
                     height: auto;
                     display: flex;
                     flex-flow: row;
+                    flex-wrap: wrap-reverse;
                     justify-content: flex-start;
                     align-items: center;
-                    background-color: var(--background);
+                    background-color: transparent;
                     overflow: hidden;
                     z-index: 2;
 
@@ -150,9 +152,15 @@ header,
                         width: var(--container-size);
                         height: var(--container-size);
                         min-height: var(--container-size);
+                        background-color: var(--background);
                         border-top: 1px solid var(--border);
                         border-right: 1px solid var(--border);
                         border-radius: 0;
+                        cursor: pointer;
+
+                        &:hover{
+                            background-color: var(--pressable);
+                        }
                     }
                 }
             }
@@ -234,5 +242,33 @@ main {
         position: fixed;
         image-rendering: pixelated;
         border: 1px solid var(--border);
+    }
+
+    .containerPopup{
+        .uploadImage, .saveImage{
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--background-container);
+            padding: 1rem;
+            border-radius: calc(var(--border-radius) * 1.5);
+            gap: 1rem;
+
+            img{
+                width: var(--container-size);
+                height: var(--container-size);
+                image-rendering: pixelated;
+            }
+            
+            button, .pressable{
+                text-align: center;
+                width: 100%;
+            }
+
+            input[type="file"]{
+                display: none;
+            }
+        }
     }
 }

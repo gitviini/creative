@@ -41,6 +41,18 @@ catch (err) { }
 //* Container Popup
 try {
     const containerPopup = document.querySelector(".containerPopup")
-    containerPopup.querySelector(".close").onclick = () => containerPopup.classList.remove("open")
+    const close = document.createElement("div")
+    close.setAttribute("class","close popup")
+    close.innerHTML = '<i class="fa fa-close fa-2x"></i><span>Fechar</span>'
+
+    close.onclick = () => {
+        const listChildren = containerPopup.children
+        for(let n = 1; n < listChildren.length; n++){
+            containerPopup.removeChild(listChildren[n])
+        }
+        containerPopup.classList.remove("open")
+    }
+
+    containerPopup.appendChild(close)
 }
 catch (err) { }

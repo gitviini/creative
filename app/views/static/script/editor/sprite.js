@@ -26,8 +26,7 @@ class SpriteEditor {
         //* Tool and tools list
         this.tools = [
             {
-                mode: "paint",
-                fill: "#000",
+                mode: "pencil",
                 icon: "https://cdn-icons-png.freepik.com/512/2123/2123462.png?ga=GA1.1.553086067.1740610280",
                 position: { x: 0, y: 0 },
                 action: () => {
@@ -37,7 +36,6 @@ class SpriteEditor {
             },
             {
                 mode: "eraser",
-                fill: "#fff",
                 icon: "https://cdn-icons-png.freepik.com/512/2123/2123513.png?ga=GA1.1.553086067.1740610280",
                 position: { x: 0, y: 0 },
                 action: () => {
@@ -46,22 +44,55 @@ class SpriteEditor {
             },
             {
                 mode: "paint roller",
-                fill: "#000",
                 icon: "https://cdn-icons-png.freepik.com/512/2123/2123528.png?ga=GA1.1.553086067.1740610280",
                 position: { x: 0, y: 0 },
                 action: () => {
+                    /* 
+                    !   Passos
+                    !   1.  pegar as coordenadas do click
+                    !   2.  pegar o data da img (const data = ctx.getImageData(0, 0, this.canvas.width, this.canvas.height).data)
+                    !   3.  varrer para cima (até o primeiro pixel colorido)
+                    !   4.  varrer para baixo (até o último pixel colorido)
+                    !   5.  pegar dados e demarcar "contorno" para o path
+                    !   6.  função handler para fazer o (ctx.beginPath(); ctx.moveTo(<...>); ctx.lineTo(<...>); ctx.fill();)
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(75, 50);
+                    ctx.lineTo(100, 75);
+                    ctx.lineTo(100, 25);
+                    ctx.fill(); */
 
+                    const data = this.getImageData()
+                    console.log(data)
                 }
             },
             {
                 mode: "move",
-                fill: undefined,
                 icon: "https://cdn-icons-png.freepik.com/512/2123/2123500.png?ga=GA1.1.553086067.1740610280",
                 position: { x: 0, y: 0 },
                 action: () => {
-                    
+                    const position = {
+                        x: this.tool.position.x - this.mouseDown.initPosition.x,
+                        y: this.tool.position.y - this.mouseDown.initPosition.y
+                    }
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+                    this.recover(position)
                 }
             },
+            {
+                mode: "dropper",
+                icon: "https://cdn-icons-png.freepik.com/512/1412/1412328.png?ga=GA1.1.553086067.1740610280",
+                position: { x: 0, y: 0 },
+                action: () => {
+                    const data = this.getImageData()
+                    const { r, g, b, a } = data[this.tool.position.y][this.tool.position.x]
+                    if (a != 0) {
+                        this.tool.fill = `rgba(${r},${g},${b},${a})`
+                        document.querySelector("label .color").style.backgroundColor = `rgba(${r},${g},${b},${a})`
+                    }
+
+                }
+            }
         ]
         this.tool = this.tools[0]
 
@@ -76,8 +107,42 @@ class SpriteEditor {
                 icon: "https://cdn-icons-png.freepik.com/512/7039/7039815.png?ga=GA1.1.553086067.1740610280",
                 action: () => {
                     const containerPopup = document.querySelector(".containerPopup")
-                    const upload = document.createElement("file")
-                    
+                    const form = document.createElement("form")
+                    form.setAttribute("class", "uploadImage")
+                    form.innerHTML += "<h2>Importar imagem</h2>"
+                    const img = document.createElement("img")
+                    img.setAttribute("alt", "image example")
+                    img.style.visibility = "hidden"
+                    const label = document.createElement("label")
+                    label.setAttribute("for", "file")
+                    label.setAttribute("class", "pressable choose")
+                    label.innerText = "Selecionar"
+                    const input = document.createElement("input")
+                    input.setAttribute("id", "file")
+                    input.setAttribute("name", "file")
+                    input.setAttribute("type", "file")
+                    input.setAttribute("accept", ".png")
+                    input.setAttribute("required", "true")
+                    const button = document.createElement("button")
+                    button.innerText = "Importar"
+                    input.onchange = (e) => {
+                        img.style.visibility = "visible"
+                        const file = e.target.files[0]
+                        img.src = URL.createObjectURL(file);
+                        console.log(file)
+                    }
+                    form.onsubmit = (e) => {
+                        e.preventDefault()
+                        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+                        this.ctx.drawImage(img, 0, 0)
+                        containerPopup.querySelector(".close").click()
+                    }
+
+                    form.appendChild(img)
+                    form.appendChild(label)
+                    form.appendChild(input)
+                    form.appendChild(button)
+                    containerPopup.appendChild(form)
                     containerPopup.classList.add("open")
                 }
             },
@@ -86,17 +151,43 @@ class SpriteEditor {
                 icon: "https://cdn-icons-png.freepik.com/512/7039/7039737.png?ga=GA1.1.553086067.1740610280",
                 action: () => {
                     this.save()
-                    const img = this.drawRecover[this.drawRecover.length - 1]
-                    const handlerLink = document.createElement("a")
-                    handlerLink.href = img
-                    handlerLink.download = this.file.name
-                    handlerLink.click()
+                    const containerPopup = document.querySelector(".containerPopup")
+                    const form = document.createElement("form")
+                    form.setAttribute("class", "saveImage")
+                    form.innerHTML += "<h2>Salvar imagem</h2>"
+                    const img = document.createElement("img")
+                    img.setAttribute("alt", "image example")
+                    img.setAttribute("src", this.drawRecover[this.drawRecover.length - 1]).src
+                    const input = document.createElement("input")
+                    input.setAttribute("type", "text")
+                    input.setAttribute("placeholder", "Nome do arquivo")
+                    input.setAttribute("required", "true")
+                    const button = document.createElement("button")
+                    button.innerText = "Salvar"
+                    form.onsubmit = (e) => {
+                        e.preventDefault()
+                        const img = this.drawRecover[this.drawRecover.length - 1]
+                        const handlerLink = document.createElement("a")
+                        handlerLink.href = img.src
+                        this.file.name = input.value
+                        handlerLink.download = this.file.name
+                        handlerLink.click()
+                    }
+
+                    form.appendChild(img)
+                    form.appendChild(input)
+                    form.appendChild(button)
+                    containerPopup.appendChild(form)
+                    containerPopup.classList.add("open")
                 }
             },
             {
                 mode: "set",
                 icon: "https://cdn-icons-png.freepik.com/512/7039/7039819.png?ga=GA1.1.553086067.1740610280",
-                action: () => { }
+                action: () => {
+                    const containerPopup = document.querySelector(".containerPopup")
+                    containerPopup.classList.add("open")
+                }
             },
             {
                 mode: "delete",
@@ -116,6 +207,29 @@ class SpriteEditor {
         this.resize()
         this.grid()
         this.getClick()
+    }
+
+    //* Get and return data image
+    getImageData() {
+        const tmpData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height).data
+        const data = []
+        for (let r = 0; r < this.screen.height; r++) {
+            const tmpDataRowSlice = tmpData.slice(this.screen.width * 4 * r, this.screen.width * 4 * (r + 1))
+            const tmpDataRow = []
+            for (let c = 0; c < tmpDataRowSlice.length; c += 4) {
+                tmpDataRow.push(
+                    {
+                        r: tmpDataRowSlice[c],
+                        g: tmpDataRowSlice[c + 1],
+                        b: tmpDataRowSlice[c + 2],
+                        a: tmpDataRowSlice[c + 3],
+                    }
+                )
+            }
+            data.push(tmpDataRow)
+        }
+
+        return data
     }
 
     //* Get color in input 
@@ -143,7 +257,7 @@ class SpriteEditor {
 
         this.fileFeatures.forEach(feature => {
             const div = document.createElement("div")
-            div.setAttribute("class", "pressable tool")
+            div.setAttribute("class", "tool")
             div.innerHTML += `<img src="${feature.icon}" alt="${feature.mode}"></img>`
             div.onclick = feature.action
             containerFileOptions.appendChild(div)
@@ -164,7 +278,13 @@ class SpriteEditor {
             containerFile.querySelector(".containerFileOptions").classList.remove("open")
         }
         selectTool.querySelector("img").setAttribute("src", tool.icon)
-        this.tool = tool
+        this.tool = {
+            mode: tool.mode,
+            icon: tool.icon,
+            fill: this.tool.fill,
+            position: tool.position,
+            action: tool.action
+        }
     }
 
     //* Get tools and push in containerTools
@@ -190,13 +310,13 @@ class SpriteEditor {
     save() {
         const img = new Image()
         img.src = this.canvas.toDataURL()
-        this.drawRecover.push(img.src)
+        this.drawRecover.push(img)
     }
 
     //* Recover image had saved before action (resize and another actions)
-    recover() {
+    recover(position = { x: 0, y: 0 }) {
         const imgRecover = this.drawRecover[this.drawRecover.length - 1]
-        this.ctx.drawImage(imgRecover, 0, 0)
+        this.ctx.drawImage(imgRecover, position.x, position.y)
     }
 
     //* Resize canvas conteiner and canvas grid
@@ -230,11 +350,11 @@ class SpriteEditor {
         positionMouse.innerHTML = `x: ${this.tool.position.x}, y: ${this.tool.position.y}`
     }
 
-    //* Handler to get click user and it do some action
+    //* Handler to get click/touch user and it do some action
     getClick() {
         const move = (e) => {
             this.getPositionMouse(e)
-            this.mouseDown.progress ? this.tool.action() : {}
+            this.mouseDown?.progress ? this.tool.action() : {}
         }
         const init = (e) => {
             this.getPositionMouse(e)
@@ -274,10 +394,24 @@ class SpriteEditor {
         window.onkeydown = (e) => {
             switch (e.key) {
                 case "p":
+                    // pencil
                     this.setSelectTool(this.tools[0])
                     break
                 case "e":
+                    // eraser
                     this.setSelectTool(this.tools[1])
+                    break
+                case "r":
+                    // paint roller
+                    this.setSelectTool(this.tools[2])
+                    break
+                case "m":
+                    // move
+                    this.setSelectTool(this.tools[3])
+                    break
+                case "d":
+                    // dropper
+                    this.setSelectTool(this.tools[4])
                     break
                 default:
                     break
