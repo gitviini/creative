@@ -159,7 +159,7 @@ header,
                         cursor: pointer;
 
                         &:hover{
-                            background-color: var(--pressable);
+                            background-color: var(--background-container);
                         }
                     }
                 }
@@ -189,7 +189,7 @@ header,
                     }
                 }
 
-                input[type="color"] {
+                input[name="color"] {
                     display: none;
                 }
             }
@@ -271,4 +271,8 @@ main {
             }
         }
     }
+}
+
+.clr-picker{
+    color: #123;
 }

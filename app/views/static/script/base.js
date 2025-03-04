@@ -7,7 +7,23 @@ window.oncontextmenu = (e) => {
 //* ColorScheme Prefer User
 // Handler function to set colorscheme
 function handlerColorScheme(colorScheme) {
-    colorScheme ? document.body.classList.add("dark") : document.body.classList.remove("dark")
+    if (colorScheme) {
+        Coloris({
+            themeMode: 'dark',
+            alpha: true,
+            wrap: true,
+            defaultColor: '#000000',
+        });
+        document.body.classList.add("dark")
+    } else {
+        Coloris({
+            themeMode: 'light',
+            alpha: true,
+            wrap: true,
+            defaultColor: '#000000',
+        });
+        document.body.classList.remove("dark")
+    }
 }
 // Instance of window.matchMedia
 const colorSchemeInstance = window.matchMedia('(prefers-color-scheme: dark)')
@@ -42,12 +58,12 @@ catch (err) { }
 try {
     const containerPopup = document.querySelector(".containerPopup")
     const close = document.createElement("div")
-    close.setAttribute("class","close popup")
+    close.setAttribute("class", "close popup")
     close.innerHTML = '<i class="fa fa-close fa-2x"></i><span>Fechar</span>'
 
     close.onclick = () => {
         const listChildren = containerPopup.children
-        for(let n = 1; n < listChildren.length; n++){
+        for (let n = 1; n < listChildren.length; n++) {
             containerPopup.removeChild(listChildren[n])
         }
         containerPopup.classList.remove("open")

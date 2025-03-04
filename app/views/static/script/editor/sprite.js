@@ -22,6 +22,9 @@ class SpriteEditor {
         }
         this.pixel = 1
         this.drawRecover = []
+        this.keyList = []
+        this.colorList = []
+        this.imageIndex = -1
 
         //* Tool and tools list
         this.tools = [
@@ -71,12 +74,15 @@ class SpriteEditor {
                 icon: "https://cdn-icons-png.freepik.com/512/2123/2123500.png?ga=GA1.1.553086067.1740610280",
                 position: { x: 0, y: 0 },
                 action: () => {
+                    console.log(this.mouseDown.target.localName)
                     const position = {
                         x: this.tool.position.x - this.mouseDown.initPosition.x,
                         y: this.tool.position.y - this.mouseDown.initPosition.y
                     }
-                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-                    this.recover(position)
+                    if (this.drawRecover.length > 0) {
+                        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+                        this.recover(position)
+                    }
                 }
             },
             {
@@ -129,12 +135,12 @@ class SpriteEditor {
                         img.style.visibility = "visible"
                         const file = e.target.files[0]
                         img.src = URL.createObjectURL(file);
-                        console.log(file)
                     }
                     form.onsubmit = (e) => {
                         e.preventDefault()
                         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
                         this.ctx.drawImage(img, 0, 0)
+                        this.save()
                         containerPopup.querySelector(".close").click()
                     }
 
@@ -157,7 +163,7 @@ class SpriteEditor {
                     form.innerHTML += "<h2>Salvar imagem</h2>"
                     const img = document.createElement("img")
                     img.setAttribute("alt", "image example")
-                    img.setAttribute("src", this.drawRecover[this.drawRecover.length - 1]).src
+                    img.setAttribute("src", this.drawRecover[this.drawRecover.length - 1].src)
                     const input = document.createElement("input")
                     input.setAttribute("type", "text")
                     input.setAttribute("placeholder", "Nome do arquivo")
@@ -207,6 +213,7 @@ class SpriteEditor {
         this.resize()
         this.grid()
         this.getClick()
+        this.save()
     }
 
     //* Get and return data image
@@ -234,19 +241,24 @@ class SpriteEditor {
 
     //* Get color in input 
     getColor() {
-        const color = document.querySelector("input[type='color']")
-        document.querySelector("label .color").style.backgroundColor = color.value
-        color.onchange = (e) => {
-            this.tool.fill = e.target.value
-            document.querySelector("label .color").style.backgroundColor = e.target.value
-        }
+        const label = document.querySelector("label .color")
+        label.onclick = () => Coloris({ swatches: this.colorList })
+        label.style.backgroundColor = "#000"
+        this.tool.fill = "#000"
+
+        Coloris({
+            onChange: (color, input) => {
+                this.tool.fill = color
+                label.style.backgroundColor = color
+            }
+        })
     }
 
     //* Get pixel size in input
     getPixelSize() {
         const pixelsize = document.querySelector("input[type='range'")
         document.querySelector("label[for='range']").innerHTML = `${this.pixel}px`
-        pixelsize.onchange = (e) => {
+        pixelsize.oninput = (e) => {
             this.pixel = e.target.value
             document.querySelector("label[for='range']").innerHTML = `${this.pixel}px`
         }
@@ -311,11 +323,14 @@ class SpriteEditor {
         const img = new Image()
         img.src = this.canvas.toDataURL()
         this.drawRecover.push(img)
+        this.imageIndex += 1
     }
 
     //* Recover image had saved before action (resize and another actions)
     recover(position = { x: 0, y: 0 }) {
-        const imgRecover = this.drawRecover[this.drawRecover.length - 1]
+        const imgRecover = this.drawRecover[this.imageIndex > -1 ? this.imageIndex : 0]
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        console.log(imgRecover)
         this.ctx.drawImage(imgRecover, position.x, position.y)
     }
 
@@ -364,9 +379,19 @@ class SpriteEditor {
                 initPosition: this.tool.position
             }
             this.tool.action()
+            if (this.colorList.length > 11) {
+                this.colorList.shift()
+            }
+            else if (!this.colorList.includes(this.tool?.fill)) {
+                this.colorList.push(this.tool?.fill)
+                Coloris({ swatches: this.colorList })
+            }
         }
         const end = (e) => {
             this.save()
+            if (this.imageIndex != (this.drawRecover.length - 1)) {
+                this.drawRecover.splice(this.imageIndex, ((this.drawRecover.length - 1) - this.imageIndex))
+            }
             this.mouseDown.progress = false
         }
 
@@ -390,32 +415,50 @@ class SpriteEditor {
         }
     }
 
+    shortCuts() {
+        // tools
+        if (this.keyList.includes("p")) {
+            // pencil
+            this.setSelectTool(this.tools[0])
+        }
+        else if (this.keyList.includes("e")) {
+            // eraser
+            this.setSelectTool(this.tools[1])
+        }
+        else if (this.keyList.includes("r")) {
+            // paint roller
+            this.setSelectTool(this.tools[2])
+        }
+        else if (this.keyList.includes("m")) {
+            // move
+            this.setSelectTool(this.tools[3])
+        }
+        else if (this.keyList.includes("d")) {
+            // dropper
+            this.setSelectTool(this.tools[4])
+        }
+
+        // editor
+        else if (this.keyList.includes("Control") && this.keyList.includes("z")) {
+            this.imageIndex > 0 ? this.imageIndex -= 1 : {}
+            this.recover()
+        }
+        else if (this.keyList.includes("Control") && this.keyList.includes("y")) {
+            this.imageIndex < (this.drawRecover.length - 1) ? this.imageIndex += 1 : {}
+            this.recover()
+        }
+    }
+
     getKeyBoard() {
         window.onkeydown = (e) => {
-            switch (e.key) {
-                case "p":
-                    // pencil
-                    this.setSelectTool(this.tools[0])
-                    break
-                case "e":
-                    // eraser
-                    this.setSelectTool(this.tools[1])
-                    break
-                case "r":
-                    // paint roller
-                    this.setSelectTool(this.tools[2])
-                    break
-                case "m":
-                    // move
-                    this.setSelectTool(this.tools[3])
-                    break
-                case "d":
-                    // dropper
-                    this.setSelectTool(this.tools[4])
-                    break
-                default:
-                    break
-            }
+            const key = e.key
+            !this.keyList.includes(key) ? this.keyList.push(key) : {}
+            this.shortCuts()
+        }
+        window.onkeyup = (e) => {
+            const key = e.key
+            const index = this.keyList.indexOf(key)
+            index != -1 ? this.keyList.splice(index, 1) : {}
         }
     }
 }
